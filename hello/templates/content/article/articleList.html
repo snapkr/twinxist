@@ -1,0 +1,83 @@
+{% extends "basic.html" %}
+
+{% block main-content %}
+
+    <!-- Modal: Bookmark -->
+    <div class="modal fade" id="modal-bookmark" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    </div><!-- /.modal -->
+
+    <div class="endless_page_template">
+     {% if artikelen %}
+        <ul id="tiles">
+            {% include page_template %}
+          </ul>
+     {% else %}
+     <p>Er zijn geen artikelen beschikbaar.</p>
+     {% endif %}
+</div>
+
+{% load staticfiles %}
+    {{ block.super }}
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+    <script src="{% static "endless_pagination/js/endless-pagination.js" %}"></script>
+   <script>$.endlessPaginate({
+        paginateOnScroll: true,
+        paginateOnScrollMargin: 200
+    });
+</script>        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+
+    <script>
+
+    $(document).ready(function() {
+
+    $('.save').on('click', function () {
+        var article_id = $(this).attr('id').replace('article ', '').concat('/')
+        var link = '/article/bookmark/'
+        console.log('request')
+        $.ajax({
+            type: 'GET',
+            url: link.concat(article_id),
+
+            success: function (data, textStatus, jqXHR) {
+                $('#modal-bookmark').html(data);
+                $('#modal-bookmark').modal('show');
+            },
+        });
+    });
+        $('.like').on('click', function () {
+        var article_id = $(this).attr('id').replace('like-btn article ', '').concat('/')
+        var link = '/article/like/'
+        console.log('request')
+        $.ajax({
+            type: 'GET',
+            url: link.concat(article_id),
+
+            success: function (data, textStatus, jqXHR) {
+                var id = "like-btn article ".concat(article_id).replace('/', '')
+                                console.log(document.getElementById(id).firstElementChild)
+                console.log(data)
+                console.log(data.liked)
+                if(data.liked){
+                     document.getElementById(id).className = "btn btn-danger"
+                } else{
+                     document.getElementById(id).className = "btn btn-default"
+                }
+                var likes = ""
+                if (data.likes > 0){
+                    likes = "           ".concat(data.likes).concat("                                            ")
+                }
+                    document.getElementById(id).firstElementChild.innerHTML = likes
+
+            },
+        });
+    });
+        });
+</script>
+{% endblock %}
+
+
+
+
+
+
+

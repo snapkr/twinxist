@@ -1,0 +1,68 @@
+{% extends "basic.html" %}
+        {% load staticfiles %}
+
+
+
+
+
+    {% block content %}
+        <div class="single-page">
+                {% if artikel %}
+							<div class="single-page-artical">
+								<div class="artical-content">
+									<img src="{% static "scraped_images/thumbnails/" %}{{ artikel.image }}" title="banner1">
+									<h3><a href="{{ artikel.id }}">{{ artikel.title }}</a></h3>
+									<p>{{ artikel.description|linebreaksbr }}</p>
+								    </div>
+								    <div class="artical-links">
+		  						 	<ul>
+		  						 		<li><a href="#"><img src="{% static "images/blog-icon2.png" %}" title="Admin"><span>admin</span></a></li>
+		  						 		<li><a href="#"><img src="{% static "images/blog-icon3.png" %}" title="Comments"><span>No comments</span></a></li>
+		  						 		<li><a href="#"><img src="{% static "images/blog-icon4.png" %}" title="Lables"><span>View posts</span></a></li>
+		  						 	</ul>
+		  						 </div>
+		  						 <div class="share-artical">
+		  						 	<ul>
+		  						 		<li><a href="#"><img src="{% static "images/facebooks.png" %}" title="facebook">Facebook</a></li>
+		  						 		<li><a href="#"><img src="{% static "images/twiter.png" %}" title="Twitter">Twiiter</a></li>
+		  						 		<li><a href="#"><img src="{% static "images/google+.png" %}" title="google+">Google+</a></li>
+		  						 		<li><a href="#"><img src="{% static "images/rss.png" %}" title="rss">Rss</a></li>
+		  						 	</ul>
+		  						 </div>
+		  						 <div class="clear"> </div>
+							</div>
+
+						</div>
+						 </div>
+                            <div id="main" role="main">
+                            {% load more_like_this %}
+                            {% more_like_this artikel as related_content for "Article.article" limit 5 %}
+                            {% if related_content %}
+                                <ul id="tiles">
+                                {% for related_artikel in related_content %}
+                                    <li onclick="location.href='{{ related_artikel.object.id }}';">
+                                        <img src="{% static "scraped_images/thumbnails/" %}{{ related_artikel.object.image }}" width="200" height="150">
+                                        <div class="post-info">
+                                            <div class="post-basic-info">
+                                                <h3><a href="{{ related_artikel.url }}">{{ related_artikel.object.title }}</a></h3>
+                                                <span><a href="{{ related_artikel.news_website.url }}"><label> </label>{{ related_artikel.object.news_website.name }}</a></span>
+                                                <p>{{ related_artikel.object.description|linebreaksbr|truncatewords:20 }}</p>
+                                            </div>
+                                            <!--<div class="post-info-rate-share">
+                                                <div class="post-basic-info">{{ related_artikel.object.date }}{{ related_artikel.object.time }}</div>
+                                                <div class="clear"> </div>
+                                            </div>-->
+                                        </div>
+                                    </li>
+                                {% endfor %}
+                                </ul>
+                            {% else %}
+                                <p>Er zijn geen artikelen beschikbaar.</p>
+                            {% endif %}
+                            </div>
+
+
+
+            {% endif %}
+		</div>
+    {% endblock %}

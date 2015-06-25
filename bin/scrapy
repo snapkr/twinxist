@@ -1,0 +1,4 @@
+#!/webapps/hello_django/bin/python
+
+from scrapy.cmdline import execute
+execute()

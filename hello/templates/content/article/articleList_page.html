@@ -1,0 +1,38 @@
+{% load endless %}
+{% load staticfiles %}
+
+{% paginate artikelen  %}
+{% for artikel in artikelen %}
+                                    <li>
+                                        <img src="{% static "scraped_images/thumbnails/" %}{{ artikel.image }}" width="200">
+                                        <div class="post-info">
+                                            <div class="post-basic-info">
+                                                <h3><a href="{{ artikel.url }}">{{ artikel.title }}</a></h3>
+                                                <span><a href="{{ artikel.news_website.url }}"><label> </label>{{ artikel.news_website.name }}</a></span>
+                                                <p>{{ artikel.description|linebreaksbr|truncatewords:20 }}</p>
+                                            </div>
+                                            <div class="post-info-rate-share">
+			        			                <div class="rateit">
+			        				                <span> </span>
+			        			                </div>
+			        			                <div class="post-share">
+                                                    <span> </span>
+			        			                </div>
+                                                <button type="button" id="article {{ artikel.id }}" class="save btn btn-default">
+                                                     <span class="glyphicon glyphicon-pushpin" aria-hidden="true"></span>
+                                                </button>
+                                                <button type="button" id="like-btn article {{ artikel.id }}" class="like btn {% if artikel in favorited %}btn-danger{% else %}btn-default{% endif %}">
+                                                     <span class="glyphicon glyphicon-heart" aria-hidden="true">     {% if artikel.favorites.count > 0 %} {{ artikel.favorites.count }} {% else %}{% endif %}
+                                                     </span>
+                                                </button>
+
+
+
+                                                <div class="clear"> </div>
+			        		                </div>
+                                        </div>
+                                    </li>
+
+{% endfor %}
+
+{% show_more %}

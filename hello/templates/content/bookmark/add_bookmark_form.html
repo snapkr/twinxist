@@ -1,0 +1,74 @@
+{% load staticfiles %}
+
+
+<div class="modal-dialog modal-lg">
+    <div class="modal-content">
+
+
+                  <div class="modal-container">
+                                          <button type="button" class="close bookmark-close" data-dismiss="modal" aria-hidden="true">×</button>
+
+                  <div class="article-container">
+                      <div class="article-wrapper">
+                  <div class="bookmark-article" style="display: list-item; position: relative;">
+                                        <img src="{% static "scraped_images/thumbnails/" %}{{ article.image }}" width="200">
+                                        <div class="post-info">
+                                            <div class="post-basic-info">
+                                                <h3><a href="{{ artikel.url }}">{{ article.title }}</a></h3>
+                                                <span><a href="{{ artikel.news_website.url }}"><label> </label>{{ article.news_website.name }}</a></span>
+                                                <p>{{ article.description|linebreaksbr|truncatewords:20 }}</p>
+                                            </div>
+
+                                        </div>
+                  </div></div>
+
+                  </div>
+                    <div class="bookmark-container">
+                        <p>Test</p>
+                        <!-- Categorieen -->
+                        {% if categories %}
+                            <ul>
+                        {% for categorie in categories %}
+                            <li>categorie.name</li>
+
+                        {% endfor %}
+                            </ul>
+                        {% else %}
+                            Geen categorieen gevonden
+                        {% endif %}
+
+
+
+                        <!--Projecten -->
+                        {% if projects %}
+                            <ul>
+                        {% for project in projects %}
+                            <li>project.name</li>
+
+                        {% endfor %}
+                            </ul>
+                        {% else %}
+                            Geen projecten gevonden
+                        {% endif %}
+
+
+
+                    </div>
+                        </div>
+
+
+
+
+
+
+
+                  <script>
+                    setTimeout(function() { jQuery('#modal').modal('hide'); }, 1000);
+                    $('body').on('hidden.bs.modal', '.modal', function () {
+                        $(this).removeData('bs.modal');
+                    });
+                  </script>
+              <!--<div class="modal-footer">
+              </div>-->
+    </div><!-- /.modal-content -->
+</div><!-- /.modal-dialog -->
