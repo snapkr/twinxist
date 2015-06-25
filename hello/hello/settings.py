@@ -59,7 +59,7 @@ MEDIA_URL = '/media/'
 
 LOGIN_URL = '/account/inloggen/'
 LOGOUT_URL = '/account/uitloggen/'
-LOGIN_REDIRECT_URL = '/content/'
+LOGIN_REDIRECT_URL = '/'
 
 # Absolute path to the directory static files should be collected to.
 # Don't put anything in this directory yourself; store your static files

@@ -21,7 +21,7 @@ def inloggen(request):
             if user is not None:
                 if user.is_active:
                     login(request, user)
-                    redirect_url = next if next is not None else BITBV.settings.LOGIN_REDIRECT_URL
+                    redirect_url = next if next is not None else hello.settings.LOGIN_REDIRECT_URL
                     return HttpResponseRedirect(redirect_url)
                 else:
                     messages.add_message(request, messages.ERROR, "Gebruiker niet actief")
