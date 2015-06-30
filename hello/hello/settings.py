@@ -29,7 +29,7 @@ DATABASES = {
 # timezone as the operating system.
 # If running in a Windows environment this must be set to the same as your
 # system time zone.
-TIME_ZONE = 'America/Chicago'
+TIME_ZONE = 'Europe/Amsterdam'
 
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
@@ -118,7 +118,7 @@ WSGI_APPLICATION = 'hello.wsgi.application'
 
 import os
 TEMPLATE_DIRS = (os.path.join(os.path.dirname(__file__), '..', 'templates').replace('\\','/'),
-                 os.path.join(os.path.dirname(__file__), '..','account', 'templates').replace('\\','/'),
+                 #os.path.join(os.path.dirname(__file__), '..','account', 'templates').replace('\\','/'),
                  )
 
 INSTALLED_APPS = (
@@ -136,6 +136,8 @@ INSTALLED_APPS = (
     'Article',
     'endless_pagination',
     'account',
+    'kombu.transport.django',
+    'djcelery',
 )
 
 # A sample logging configuration. The only tangible logging
@@ -180,3 +182,14 @@ TEMPLATE_CONTEXT_PROCESSORS += (
 )
 
 STATIC_ROOT = '/webapps/hello_django/static'
+
+# django-celery settings
+import djcelery
+djcelery.setup_loader()
+BROKER_HOST = "localhost"
+BROKER_PORT = 5672
+BROKER_BACKEND = "django"
+BROKER_USER = "guest"
+BROKER_PASSWORD = "guest"
+BROKER_VHOST = "/"
+CELERYBEAT_SCHEDULER = 'djcelery.schedulers.DatabaseScheduler'

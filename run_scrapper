@@ -1,0 +1,9 @@
+#!/bin/bash
+ 
+echo "Starting scrapper as `whoami`"
+echo "1. print dir `pwd`"
+cd /webapps/hello_django/hello/
+echo "2. print dir `pwd`"
+echo "activagte vnv"
+source /bin/activate
+exec scrapy crawl article_spider -a id=1 -a do_action=yes
